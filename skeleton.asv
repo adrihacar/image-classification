@@ -56,7 +56,7 @@ for i = 1:length(Xtrain)
     imshow(BW,[]);
     pause
     % Get the amount of edges in the BW image
-    edge_quantity = nnz(BW);
+    edge_quantity = sum(sum(BW);
     % Save feature
     features(i,3) = edge_quantity ;    
   
