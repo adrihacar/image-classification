@@ -56,36 +56,36 @@ for i = 1:length(Xtrain)
     imshow(BW,[]);
     pause
     % Get the amount of edges in the BW image
-    edge_quantity = sum(sum(BW);
+    edge_quantity = nnz(BW);
     % Save feature
     features(i,3) = edge_quantity ;    
   
 end
 
-% %% Textual Feature Extraction
-% disp('Extracting textual features...')
-% for i = 1:length(Xtrain)
-%     
-%     % Select current text
-%     T =  ;
-%     % Tokenize document (separate into words)
-%     words = obtain_word_array(T);
-%     
-%     %%% Feature 4: Number of words
-%     % Obtain the number of words (tokens)
-%     num_words = .. ;
-%     % Save feature
-%     features(i,4) = num_words ;  
-%     
-%     %%% Feature 5: Length of words
-%     % Obtain the length of each word in the description
-%     word_lengths = .. ;
-%     % Obtain the mean length of the words in the description
-%     mean_word_length = .. ;
-%     % Save feature
-%     features(i,5) = mean_word_length; 
-% 
-% end
+%% Textual Feature Extraction
+disp('Extracting textual features...')
+for i = 1:length(Xtrain)
+    
+    % Select current text
+    T = Xtrain{i,2};
+    % Tokenize document (separate into words)
+    words = obtain_word_array(T);
+    
+    %%% Feature 4: Number of words
+    % Obtain the number of words (tokens)
+    num_words = length(words);
+    % Save feature
+    features(i,4) = num_words ;  
+    pause
+    %%% Feature 5: Length of words
+    % Obtain the length of each word in the description
+    word_lengths = arrayfun(length(),words) ;
+    % Obtain the mean length of the words in the description
+    mean_word_length = mean(word_lengths);
+    % Save feature
+    features(i,5) = mean_word_length; 
+
+end
 % disp('Feature Extraction complete!')
 % 
 % %% Normalization Stage
