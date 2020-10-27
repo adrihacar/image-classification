@@ -15,6 +15,7 @@ disp('Local data read!')
 fprintf('\n-Comedy films: %i',sum(y==0))
 fprintf('\n-Drama  films: %i\n\n',sum(y==1))
 
+
 %% Feature Extraction Stage
 disp('Feature Extraction Stage in progress...')
 % Creating empy array of features
@@ -134,12 +135,34 @@ features_test = zeros(length(Xtest),5);
 %% Test sample processing
 for i = 1:length(Xtest)
     
+    I_test = Xtest{i,1};   
+    HSV_test = rgb2hsv(I_test);
+    %%% Feature 1: Dominant Colours
+    H_test = HSV_test(:,:,1);
+    colour_entropy_test = entropy(H_test);
+    %%% Feature 2: Brightness
+    V_test = HSV_test(:,:,3) ;
+    brightness_test = mean(V_test(:));
+    %%% Feature 3: Edges
+    Ig_test = rgb2gray(I_test);
+    BW_test = edge(Ig_test);
+    edge_quantity_test = nnz(BW_test);
     
-    features_test(i,1) = .. ;
-    features_test(i,2) = .. ;
-    features_test(i,3) = .. ;
-    features_test(i,4) = .. ;  
-    features_test(i,5) = .. ; 
+    features_test(i,1) = colour_entropy_test ;
+    features_test(i,2) = brightness_test ;
+    features_test(i,3) = edge_quantity_test ;
+    
+    
+    T_test = Xtest{i,2};
+    words_test = obtain_word_array(T_test);
+    %%% Feature 4: Number of words
+    num_words_test = length(words_test);
+    %%% Feature 5: Length of words
+    word_lengths_test = arrayfun(@(x) strlength(x),words_test);
+    mean_word_length_test = mean(word_lengths_test);
+    
+    features_test(i,4) = num_words_test ;  
+    features_test(i,5) = mean_word_length_test ; 
     
 end
 
@@ -147,7 +170,14 @@ end
 %%% Perform Normalization
 % Note that you do not need to recompute the mean and standard deviation
 % again. You need to use the values from training
-features_test_n = .. ;
+
+feat_mean_test = mean(features_test);
+feat_std_test  = std(features_test) ;
+features_test_n = (features_test - feat_mean_test)./feat_std_test;
+
+check_normalization(features_test_n);
+
+
 
 %% Test the models against the new extracted features
 % Test visual  model
