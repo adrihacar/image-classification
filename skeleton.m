@@ -94,7 +94,7 @@ feat_mean = mean(features);
 % Obtain the standard deviation of each feature
 feat_std  = std(features) ;
 % Normalize the extracted features
-features_n = normalize(features);
+features_n = (features - feat_mean)./feat_std;
 
 % Check if normalization was correctly implemented (VERY IMPORTANT)
 % If normalization was correctly implemented, running the line below should
@@ -108,8 +108,8 @@ check_normalization(features_n);
 %   -3: Edges
 %   -4: Word number
 %   -5: Word length
-feat_a = .. ;
-feat_b = .. ;
+feat_a = 1;
+feat_b = 2;
 % Plot feature values in scatter diagram
 figure()
 visualize_features(features_n, Ytrain, feat_a, feat_b)
@@ -133,7 +133,7 @@ features_test = zeros(length(Xtest),5);
 
 %% Test sample processing
 for i = 1:length(Xtest)
- 
+    
     
     features_test(i,1) = .. ;
     features_test(i,2) = .. ;
