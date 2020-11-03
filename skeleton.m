@@ -194,8 +194,19 @@ check_normalization(features_test_n);
 disp('Performance Assessment Stage in progress...')
 labels_true = Ytest';
 % Measure the performance of the developed system (Detection & False Alarm)
-P_D  = .. ;
-P_FA = .. ;
+true_positives = 0;
+false_alarms = 0;
+for i = 1:length(labels_true)
+    if labels_pred(i) == 1
+        if labels_true(i) == 1
+            true_positgitives = true_positives + 1;
+        else
+            false_alarms = false_alarms + 1;
+        end
+    end
+end
+P_D  = true_positives / sum(labels_pred(:) == -1) ;
+P_FA = false_alarms / sum(labels_pred(:) == -1) ;
 
 % Measure the performance of the developed system (AUC)
 % (NO NEED TO CODE ANYTHING HERE)
