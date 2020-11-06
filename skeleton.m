@@ -171,8 +171,6 @@ end
 % Note that you do not need to recompute the mean and standard deviation
 % again. You need to use the values from training
 
-feat_mean_test = mean(features_test);
-feat_std_test  = std(features_test) ;
 features_test_n = (features_test - feat_mean)./feat_std;
 
 check_normalization(features_test_n);
